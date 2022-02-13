@@ -1,17 +1,25 @@
 import type { NextPage } from "next";
-import styled from "styled-components";
+import { wrapper } from "../app";
+import { todoActions } from "../app/todo";
+import TodoList from "../components/TodoList";
+import { getTodosAPI } from "../utils/api/todo";
 
 const Home: NextPage = () => {
-  return (
-    <div>
-      Home
-      <Styled>test</Styled>
-    </div>
-  );
+  return <TodoList />;
 };
 
-const Styled = styled.div`
-  background-color: red;
-`;
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req, res, ...etc }) => {
+      try {
+        const { data } = await getTodosAPI();
+        store.dispatch(todoActions.setTodo(data));
+        return { props: {} };
+      } catch (e) {
+        // console.log(e);
+        return { props: {} };
+      }
+    }
+);
 
 export default Home;

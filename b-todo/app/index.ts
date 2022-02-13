@@ -5,8 +5,15 @@ import {
   configureStore,
 } from "@reduxjs/toolkit";
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import {
+  TypedUseSelectorHook,
+  useSelector as useReduxSelector,
+} from "react-redux";
+import todo from "./todo";
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  todo,
+});
 
 const reducer = (state: CombinedState<any>, action: AnyAction) => {
   if (action.type === HYDRATE) {
@@ -30,7 +37,7 @@ const reducer = (state: CombinedState<any>, action: AnyAction) => {
 export type RootState = ReturnType<typeof rootReducer>;
 
 //* 타입 지원되는 커스텀 useSelector 만들기
-// export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
+export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 
 const initStore = (context: any) =>
   configureStore({
