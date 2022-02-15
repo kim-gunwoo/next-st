@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "email": "jerrynim@bnb.com",
+    "firstname": "님",
+    "lastname": "제리",
+    "password": "$2a$08$6irbcQUCpxpKD14vmaeAIOkIa5mMBeVHkaIntPWzVCw9G39DZp9pq",
+    "birthday": "2017-02-02T15:00:00.000Z",
+    "profileImage": "/static/image/user/default_user_profile_image.jpg"
+  },
+  {
+    "id": 2,
+    "email": "jerrynim@bnb.com",
+    "firstname": "님",
+    "lastname": "제리",
+    "password": "$2a$08$0EhoyidLvqX4SxhIVn3b3OUqmnRSszyjqg.F.xxa7M8FoERJo0PV2",
+    "birthday": "2019-01-31T15:00:00.000Z",
+    "profileImage": "/static/image/user/default_user_profile_image.jpg"
+  },
+  {
+    "id": 3,
+    "email": "jerrynim@bnb.com1",
+    "firstname": "님",
+    "lastname": "제리",
+    "password": "$2a$08$oJjavnM30jvgZOiwD.IsGuTK5MJtxIaHN6DHktvAwEVacnRkYiki6",
+    "birthday": "2019-01-31T15:00:00.000Z",
+    "profileImage": "/static/image/user/default_user_profile_image.jpg"
+  }
+]
