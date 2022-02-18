@@ -2,7 +2,7 @@ import App from "next/app";
 import type { AppContext, AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "../styles/GlobalStyle";
-import pallete from "../styles/pallete";
+import pallete from "../styles/palette";
 import { wrapper } from "../store";
 import Header from "../components/Header";
 
