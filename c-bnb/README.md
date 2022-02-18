@@ -18,6 +18,8 @@ $ npm i @reduxjs/toolkit react-redux next-redux-wrapper
 ## svg
 $ npm i -D babel-plugin-inline-react-svg
 
+## next-cookies
+$ npm i next-cookies
 ```
 
 ### library
