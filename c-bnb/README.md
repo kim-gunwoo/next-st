@@ -30,6 +30,12 @@ $ npm i react-outside-click-handler
 ## react-datepicker
 $ npm i react-datepicker
 
+## jsonwebtoken
+$ npm i jsonwebtoken
+
+## bcryptjs
+$ npm i bcryptjs
+
 ```
 
 ## dependencies reference

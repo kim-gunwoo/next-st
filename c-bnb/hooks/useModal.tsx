@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
+import { createPortal, flushSync } from "react-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -20,6 +20,10 @@ const Container = styled.div`
   }
 `;
 
+interface IProps {
+  children: React.ReactNode;
+}
+
 const useModal = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
@@ -31,10 +35,6 @@ const useModal = () => {
     setModalOpened(false);
   };
 
-  interface IProps {
-    children: React.ReactNode;
-  }
-
   const ModalPortal: React.FC<IProps> = ({ children }) => {
     const ref = useRef<Element | null>();
     const [mounted, setMounted] = useState(false);
@@ -45,6 +45,7 @@ const useModal = () => {
         const dom = document.querySelector("#root-modal");
         ref.current = dom;
       }
+      return () => {};
     }, []);
 
     if (ref.current && mounted && modalOpened) {

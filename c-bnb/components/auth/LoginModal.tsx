@@ -11,6 +11,7 @@ import { authActions } from "../../store/auth";
 import { loginAPI } from "../../lib/api/auth";
 import useValidateMode from "../../hooks/useValidateMode";
 import { userActions } from "../../store/user";
+import { useSelector } from "../../store";
 
 interface IProps {
   closeModal: () => void;
@@ -20,6 +21,7 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const isLogged = useSelector((state) => state.user.isLogged);
 
   const [isPasswordHided, setIsPasswordHided] = useState(true);
 
@@ -57,12 +59,18 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
       try {
         const { data } = await loginAPI(loginBody);
         dispatch(userActions.setLoggedUser(data));
-        closeModal();
+        // closeModal();
       } catch (e: any) {
         console.log(e.response);
       }
     }
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      closeModal();
+    }
+  }, [closeModal, isLogged]);
 
   useEffect(() => {
     return () => {

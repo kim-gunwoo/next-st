@@ -15,6 +15,7 @@ import { userActions } from "../../store/user";
 import useValidateMode from "../../hooks/useValidateMode";
 import PasswordWarning from "./PasswordWarning";
 import { authActions } from "../../store/auth";
+import { useSelector } from "../../store";
 
 interface IProps {
   closeModal: () => void;
@@ -43,6 +44,7 @@ const SignUpModal: React.FC<IProps> = ({ closeModal }) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
 
   const dispatch = useDispatch();
+  const isLogged = useSelector((state) => state.user.isLogged);
   const { setValidateMode } = useValidateMode();
 
   //*비밀번호 숨김 토글하기
@@ -182,15 +184,19 @@ const SignUpModal: React.FC<IProps> = ({ closeModal }) => {
           ).toISOString(),
         };
         const { data } = await signupAPI(signUpBody);
-
         dispatch(userActions.setLoggedUser(data));
-
-        closeModal();
+        // closeModal();
       } catch (e) {
         console.log(e);
       }
     }
   };
+
+  useEffect(() => {
+    if (isLogged) {
+      closeModal();
+    }
+  }, [closeModal, isLogged]);
 
   //* 로그인 모달로 변경하기
   const changeToLoginModal = useCallback(() => {
