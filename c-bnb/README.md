@@ -17,6 +17,9 @@ $ npm i @reduxjs/toolkit react-redux next-redux-wrapper
 
 ## svg
 $ npm i -D babel-plugin-inline-react-svg
+
+## next-cookies
+$ npm i next-cookies
 ```
 
 ### library
@@ -24,6 +27,16 @@ $ npm i -D babel-plugin-inline-react-svg
 ```
 ## react-outside-click-handler
 $ npm i react-outside-click-handler
+
+
+## react-datepicker
+$ npm i react-datepicker
+
+## jsonwebtoken
+$ npm i jsonwebtoken
+
+## bcryptjs
+$ npm i bcryptjs
 
 ```
 

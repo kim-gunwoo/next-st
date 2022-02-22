@@ -3,7 +3,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import HamburgerIcon from "../public/static/svg/header/hamburger.svg";
-// import { logoutAPI } from "../lib/api/auth";
+import { logoutAPI } from "../lib/api/auth";
 import { userActions } from "../store/user";
 import { useSelector } from "../store";
 
@@ -16,8 +16,8 @@ const HeaderUserProfile: React.FC = () => {
   //* 로그아웃 하기
   const logout = async () => {
     try {
-      // await logoutAPI();
-      // dispatch(userActions.initUser());
+      await logoutAPI();
+      dispatch(userActions.initUser());
     } catch (e: any) {
       console.log(e.message);
     }

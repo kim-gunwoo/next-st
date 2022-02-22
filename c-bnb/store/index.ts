@@ -10,9 +10,13 @@ import {
   useSelector as useReduxSelector,
 } from "react-redux";
 import user from "./user";
+import auth from "./auth";
+import common from "./common";
 
 const rootReducer = combineReducers({
   user: user.reducer,
+  auth: auth.reducer,
+  common: common.reducer,
 });
 
 const reducer = (state: CombinedState<any>, action: AnyAction) => {
