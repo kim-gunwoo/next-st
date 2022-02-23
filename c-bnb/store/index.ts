@@ -12,11 +12,13 @@ import {
 import user from "./user";
 import auth from "./auth";
 import common from "./common";
+import searchRoom from "./searchRoom";
 
 const rootReducer = combineReducers({
   user: user.reducer,
   auth: auth.reducer,
   common: common.reducer,
+  searchRoom: searchRoom.reducer,
 });
 
 const reducer = (state: CombinedState<any>, action: AnyAction) => {
