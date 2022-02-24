@@ -52,14 +52,14 @@ const Container = styled.div`
     top: 40px;
     left: 56px;
     border: 0;
-    background-image: url("/static/svg/common/datePicker/datepicker_left_arrow.svg");
+    /* background-image: url("/static/svg/common/datePicker/datepicker_left_arrow.svg"); */
     background-repeat: no-repeat;
   }
   .react-datepicker__navigation--next {
     top: 40px;
     right: 56px;
     border: 0;
-    background-image: url("/static/svg/common/datePicker/datepciker_right_arrow.svg");
+    /* background-image: url("/static/svg/common/datePicker/datepciker_right_arrow.svg"); */
     background-repeat: no-repeat;
   }
   .react-datepicker__current-month {
@@ -100,7 +100,9 @@ const Container = styled.div`
       border-radius: 50%;
     }
   }
-
+  .react-datepicker__week {
+    display: flex;
+  }
   .react-datepicker__day--in-range {
     background-color: ${({ theme }) => theme.gray_f7};
   }

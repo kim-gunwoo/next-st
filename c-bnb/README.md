@@ -38,6 +38,9 @@ $ npm i jsonwebtoken
 ## bcryptjs
 $ npm i bcryptjs
 
+## lodash
+$ npm i lodash
+
 ```
 
 ## dependencies reference
