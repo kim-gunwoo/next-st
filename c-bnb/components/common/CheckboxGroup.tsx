@@ -94,7 +94,7 @@ const Container = styled.div`
     cursor: pointer;
   }
   input[type="checkbox"]:checked + span::before {
-    content: " ";
+    content: "";
     width: 18px;
     height: 18px;
     display: inline-table;
