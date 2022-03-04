@@ -252,15 +252,14 @@ const RegisterRoomChecklist: React.FC = () => {
           inProgress={stepInProgress === "date"}
         />
       </ul>
-      <RegisterRoomSubmitFooter />
-      {/* {isDateActived ? (
+      {isDateActived ? (
         <RegisterRoomSubmitFooter />
       ) : (
         <RegisterRoomFooter
           prevHref="/room/register/date"
           nextHref={`/room/register/${stepInProgress}`}
         />
-      )} */}
+      )}
     </Container>
   );
 };
