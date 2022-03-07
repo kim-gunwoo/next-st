@@ -41,6 +41,14 @@ $ npm i bcryptjs
 ## lodash
 $ npm i lodash
 
+## formidable // 파일업로드
+$ npm i formidable
+
+## aws
+$ npm i aws-sdk
+
+## uuid
+$ npm i uuid
 ```
 
 ## dependencies reference
