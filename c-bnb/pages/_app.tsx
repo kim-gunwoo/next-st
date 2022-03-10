@@ -22,6 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
+// v 6
 // MyApp.getInitialProps = async (context: AppContext) => {
 //   const appInitialProps = await App.getInitialProps(context);
 //   const cookieObject = cookieStringToObject(context.ctx.req?.headers.cookie);
@@ -39,22 +40,22 @@ function MyApp({ Component, pageProps }: AppProps) {
 //   return { ...appInitialProps };
 // };
 
+// v7
 MyApp.getInitialProps = wrapper.getInitialAppProps(
   (store) => async (context: AppContext) => {
     const appInitialProps = await App.getInitialProps(context);
     const cookieObj = cookies(context.ctx);
-    const cookieObject = cookieStringToObject(context.ctx.req?.headers.cookie);
+    // const cookieObject = cookieStringToObject(context.ctx.req?.headers.cookie);
     const { isLogged } = store.getState().user;
-    // console.log(context.ctx.req?.headers);
-    console.log("wrapper.getInitialAppProps : ", cookieObject, cookieObj);
+    // console.log("wrapper.getInitialAppProps : ", cookieObject, cookieObj);
+
     try {
-      // if (!isLogged && cookieObject.access_token) {
       if (!isLogged && cookieObj.access_token) {
         // axios.defaults.headers.common["Cookie"] = cookieObject.access_token;
         axios.defaults.headers.common["Cookie"] = cookieObj.access_token;
-        // axios.defaults.headers.Cookie = cookieObj.access_token;
         const { data } = await meAPI();
         store.dispatch(userActions.setLoggedUser(data));
+        return { pageProps: {} };
       }
     } catch (e: any) {
       // console.log(e.message);

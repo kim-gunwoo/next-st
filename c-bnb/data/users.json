@@ -7,5 +7,14 @@
     "password": "$2a$08$9umqN7nSiWujAj0EXDew9.akSsomNL2jxM8PpmoBW0DwFjAbAxE16",
     "birthday": "2014-01-04T15:00:00.000Z",
     "profileImage": "/static/image/user/default_user_profile_image.jpg"
+  },
+  {
+    "id": 3,
+    "email": "11111111@bnb.com1",
+    "firstname": "님",
+    "lastname": "1111111",
+    "password": "$2a$08$oJjavnM30jvgZOiwD.IsGuTK5MJtxIaHN6DHktvAwEVacnRkYiki6",
+    "birthday": "2019-01-31T15:00:00.000Z",
+    "profileImage": "/static/image/user/default_user_profile_image.jpg"
   }
 ]
