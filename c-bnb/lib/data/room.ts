@@ -29,4 +29,5 @@ const write = (rooms: StoredRoomType[]) => {
   writeFileSync("data/rooms.json", JSON.stringify(rooms));
 };
 
-export default { getList, exist, write, find };
+const room = { getList, exist, write, find };
+export default room;

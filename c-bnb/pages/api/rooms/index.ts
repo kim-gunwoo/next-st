@@ -103,7 +103,7 @@ const rooms = async (req: NextApiRequest, res: NextApiResponse) => {
       Data.room.write([...rooms, newRoom]);
       res.statusCode = 201;
       return res.end();
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
       return res.send(e.message);
     }
