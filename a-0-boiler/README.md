@@ -12,7 +12,12 @@ $ npx create-next-app {name} --ts
 $ npm i @reduxjs/toolkit react-redux next-redux-wrapper
 
 ## emotionjs
-$ npm i @emotion/css @emotion/react emotion-reset
+// React framwork
+$ npm i @emotion/react
+// no framwork
+$ npm i @emotion/css
+// emotion-reset
+$ npm i emotion-reset
 
 ## storybook
 $ npx sb init
@@ -21,9 +26,12 @@ $ npx sb init
 $ npm i axios
 ```
 
-### .babelrc
+### emotion
 
-```js
+> 참고 : https://emotion.sh/docs/css-prop
+
+```json
+// .babelrc
 {
   "presets": [
     [
@@ -38,6 +46,16 @@ $ npm i axios
   ],
   "plugins": ["@emotion/babel-plugin"]
 }
+// .tsconfig.json
+{
+  "compilerOptions": {
+    ...
+    "types": ["@emotion/react/types/css-prop"]
+    ...
+  },
+  ...
+}
+
 ```
 
 ### storybook .storybook/main.js
@@ -137,4 +155,36 @@ const nextConfig = {
     ];
   },
 };
+```
+
+### styled-components
+
+```js
+// _document.tsx
+class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) =>
+            sheet.collectStyles(<App {...props} />),
+        });
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      };
+    } finally {
+      sheet.seal();
+    }
+  }
+  ...
+}
 ```
