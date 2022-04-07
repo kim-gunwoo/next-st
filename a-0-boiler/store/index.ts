@@ -1,11 +1,14 @@
-import { HYDRATE, createWrapper } from "next-redux-wrapper";
+import { HYDRATE, createWrapper, Context } from "next-redux-wrapper";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   TypedUseSelectorHook,
   useSelector as useReduxSelector,
 } from "react-redux";
+import example from "./example";
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  example: example.reducer,
+});
 
 //* 스토어의 타입
 export type RootState = ReturnType<typeof rootReducer>;
@@ -14,7 +17,7 @@ let initialRootState: RootState;
 
 const reducer = (state: any, action: any) => {
   if (action.type === HYDRATE) {
-    if (state === initialRootState) {
+    if (state !== initialRootState) {
       return {
         ...state,
         ...action.payload,
@@ -28,7 +31,7 @@ const reducer = (state: any, action: any) => {
 //* 타입 지원되는 커스텀 useSelector 만들기
 export const useSelector: TypedUseSelectorHook<RootState> = useReduxSelector;
 
-const initStore = (context: any) =>
+const makeStore = (context: Context) =>
   configureStore({
     reducer,
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
@@ -36,4 +39,4 @@ const initStore = (context: any) =>
     devTools: process.env.NODE_ENV !== "production",
   });
 
-export const wrapper = createWrapper(initStore);
+export const wrapper = createWrapper(makeStore);
