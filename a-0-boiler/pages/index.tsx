@@ -1,10 +1,34 @@
-import React from "react";
-import type { NextPage } from "next";
+import React, { useEffect, useState } from "react";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  NextPage,
+  NextPageContext,
+} from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { css } from "@emotion/react";
+import { RootState, wrapper } from "store";
+import { useDispatch, useSelector } from "react-redux";
+import { exampleAction } from "store/example";
+import Exam from "components/Exam";
 
-const Home: NextPage = () => {
+interface IProps {
+  isExample: boolean;
+}
+
+const Home: NextPage<IProps> = ({ isExample }) => {
+  // const Home: NextPage<IProps> = () => {
+  // const Home: NextPage = () => {
+  // const { isExample } = useSelector((state: RootState) => state.example);
+  // const dispatch = useDispatch();
+
+  const [isEx, setIsEx] = useState(false);
+
+  useEffect(() => {
+    // dispatch(exampleAction.setIsExMode(true));
+  }, []);
+
   return (
     <div css={style}>
       {/* 
@@ -19,12 +43,64 @@ const Home: NextPage = () => {
       <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
       <div>A</div>
       <div>B</div>
+      <button onClick={() => setIsEx(!isEx)}>isEx change button</button>
+      <div className="cnt">
+        <div className="title">isEx</div>
+        {isEx ? <div>true</div> : <div>false</div>}
+      </div>
+      <div className="cnt">
+        <div className="title">isExample props</div>
+        {isExample ? <div>true</div> : <div>false</div>}
+      </div>
+      <Exam />
     </div>
   );
 };
 
 const style = css`
   background: green;
+
+  .cnt {
+    background: white;
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: 20px;
+  }
 `;
+
+// Home.getInitialProps = wrapper.getInitialPageProps(
+//   (store) =>
+//     async (context: NextPageContext): Promise<object> => {
+//       store.dispatch(exampleAction.setIsExMode(true));
+//       return {};
+//     }
+// );
+
+// Home.getInitialProps = wrapper.getInitialPageProps(
+//   (store) => async (context) => {
+//     store.dispatch(exampleAction.setIsExMode(true));
+//     return {};
+//   }
+// );
+
+export const getServerSideProps: GetServerSideProps =
+  wrapper.getServerSideProps(
+    (store) =>
+      async (
+        context: GetServerSidePropsContext
+      ): Promise<{ props: object }> => {
+        const res: boolean = await new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(true);
+          }, 3000);
+        });
+        store.dispatch(exampleAction.setIsExMode(res));
+        const { isExample } = store.getState().example;
+        return { props: { isExample } };
+        // return { props: {} };
+      }
+  );
 
 export default Home;
