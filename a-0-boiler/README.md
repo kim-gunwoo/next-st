@@ -24,6 +24,14 @@ $ npx sb init
 
 ## axios
 $ npm i axios
+
+## styled components (css in js)
+$ npm i styled-components styled-reset
+$ npm i -D @types/styled-components
+
+## svg
+$ npm i -D babel-plugin-inline-react-svg
+
 ```
 
 ### emotion
