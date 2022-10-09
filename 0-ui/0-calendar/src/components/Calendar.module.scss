@@ -1,0 +1,52 @@
+.overlay {
+  box-sizing: border-box;
+  width: fit-content;
+  height: fit-content;
+}
+
+.container {
+  width: 300px;
+  height: 350px;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+.month {
+  display: grid;
+  grid-template-rows: repeat(6, 40px);
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.dayWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.disabled {
+  color: gray;
+  cursor: default;
+}
+
+.seleted {
+  background-color: red;
+  border-radius: 50%;
+}
+
+.today {
+  font-size: 8px;
+}
