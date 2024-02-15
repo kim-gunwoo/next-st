@@ -1,11 +1,11 @@
 import Image from "next/image";
-import styles from "./page.module.css";
-import next from "../../public/next.svg";
+import styles from "../page.module.css";
+import next from "../../../public/next.svg";
 import Link from "next/link";
 
-export default function Main() {
+export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <div className={styles.left}>
         <Image src={next} alt="logo" />
       </div>
@@ -20,6 +20,6 @@ export default function Main() {
           로그인
         </Link>
       </div>
-    </div>
+    </>
   );
 }
