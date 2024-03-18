@@ -58,14 +58,14 @@ export const handlers = [
       {
         postId: cursor + 1,
         User: User[0],
-        content: `${cursor + 1} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 1} Nextjs is so marvelous. I'm gonna buy that.`,
         Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
         createdAt: generateDate(),
       },
       {
         postId: cursor + 2,
         User: User[0],
-        content: `${cursor + 2} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 2} Nextjs is so marvelous. I'm gonna buy that.`,
         Images: [
           { imageId: 1, link: faker.image.urlLoremFlickr() },
           { imageId: 2, link: faker.image.urlLoremFlickr() },
@@ -75,14 +75,14 @@ export const handlers = [
       {
         postId: cursor + 3,
         User: User[0],
-        content: `${cursor + 3} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 3} Nextjs is so marvelous. I'm gonna buy that.`,
         Images: [],
         createdAt: generateDate(),
       },
       {
         postId: cursor + 4,
         User: User[0],
-        content: `${cursor + 4} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 4} Nextjs is so marvelous. I'm gonna buy that.`,
         Images: [
           { imageId: 1, link: faker.image.urlLoremFlickr() },
           { imageId: 2, link: faker.image.urlLoremFlickr() },
@@ -94,12 +94,91 @@ export const handlers = [
       {
         postId: cursor + 5,
         User: User[0],
-        content: `${cursor + 5} Z.com is so marvelous. I'm gonna buy that.`,
+        content: `${cursor + 5} Nextjs is so marvelous. I'm gonna buy that.`,
         Images: [
           { imageId: 1, link: faker.image.urlLoremFlickr() },
           { imageId: 2, link: faker.image.urlLoremFlickr() },
           { imageId: 3, link: faker.image.urlLoremFlickr() },
         ],
+        createdAt: generateDate(),
+      },
+    ]);
+  }),
+  http.get("/api/followingPosts", async ({ request }) => {
+    return HttpResponse.json([
+      {
+        postId: 1,
+        User: User[0],
+        content: `${1} Stop following me. I'm too famous.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 2,
+        User: User[0],
+        content: `${2} Stop following me. I'm too famous.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 3,
+        User: User[0],
+        content: `${3} Stop following me. I'm too famous.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 4,
+        User: User[0],
+        content: `${4} Stop following me. I'm too famous.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 5,
+        User: User[0],
+        content: `${5} Stop following me. I'm too famous.`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+    ]);
+  }),
+  http.get("/api/search/:tag", ({ request, params }) => {
+    const { tag } = params;
+    return HttpResponse.json([
+      {
+        postId: 1,
+        User: User[0],
+        content: `${1} 검색결과 ${tag}`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 2,
+        User: User[0],
+        content: `${2} 검색결과 ${tag}`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 3,
+        User: User[0],
+        content: `${3} 검색결과 ${tag}`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 4,
+        User: User[0],
+        content: `${4} 검색결과 ${tag}`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
+        createdAt: generateDate(),
+      },
+      {
+        postId: 5,
+        User: User[0],
+        content: `${5} 검색결과 ${tag}`,
+        Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }],
         createdAt: generateDate(),
       },
     ]);
