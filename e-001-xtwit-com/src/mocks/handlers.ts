@@ -53,7 +53,9 @@ export const handlers = [
     // });
   }),
   http.get("/api/postRecommends", async ({ request }) => {
-    const cursor = 0;
+    const url = new URL(request.url);
+    const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
+
     return HttpResponse.json([
       {
         postId: cursor + 1,
