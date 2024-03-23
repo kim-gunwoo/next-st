@@ -22,6 +22,8 @@ export default async function onSubmit(
   if (!formData.get("image")) {
     return { message: "no_image" };
   }
+
+  formData.set("nickname", formData.get("name") as string);
   let shouldRedirect = false;
   try {
     const response = await fetch(
