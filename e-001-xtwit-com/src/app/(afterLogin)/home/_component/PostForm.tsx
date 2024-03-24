@@ -2,9 +2,9 @@
 
 import { Session } from "next-auth";
 import style from "./postForm.module.css";
-import { ChangeEventHandler, FormEventHandler, useRef, useState } from "react";
+import { ChangeEventHandler, FormEvent, useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Post } from "@/model/Post";
 
 export default function PostForm({ me }: { me: Session | null }) {
@@ -14,67 +14,60 @@ export default function PostForm({ me }: { me: Session | null }) {
     Array<{ dataUrl: string; file: File } | null>
   >([]);
   const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async (e: FormEvent) => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("content", content);
+      preview.forEach((p) => {
+        p && formData.append("images", p.file);
+      });
+      return fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+        method: "post",
+        credentials: "include",
+        body: formData,
+      });
+    },
+    async onSuccess(response, variable) {
+      const newPost = await response.json();
+      setContent("");
+      setPreview([]);
+      if (queryClient.getQueryData(["posts", "recommends"])) {
+        queryClient.setQueryData(
+          ["posts", "recommends"],
+          (prevData: { pages: Post[][] }) => {
+            const shallow = {
+              ...prevData,
+              pages: [...prevData.pages],
+            };
+            shallow.pages[0] = [...shallow.pages[0]];
+            shallow.pages[0].unshift(newPost);
+            return shallow;
+          }
+        );
+      }
+      if (queryClient.getQueryData(["posts", "followings"])) {
+        queryClient.setQueryData(
+          ["posts", "followings"],
+          (prevData: { pages: Post[][] }) => {
+            const shallow = {
+              ...prevData,
+              pages: [...prevData.pages],
+            };
+            shallow.pages[0] = [...shallow.pages[0]];
+            shallow.pages[0].unshift(newPost);
+            return shallow;
+          }
+        );
+      }
+    },
+    onError(error) {
+      console.error(error);
+    },
+  });
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setContent(e.target.value);
-  };
-
-  const onSubmit: FormEventHandler = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("content", content);
-    preview.forEach((p) => {
-      p && formData.append("images", p.file);
-    });
-
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`,
-        {
-          method: "post",
-          credentials: "include",
-          body: formData,
-        }
-      );
-
-      if (response.status === 201) {
-        setContent("");
-        setPreview([]);
-
-        const newPost = await response.json();
-
-        if (queryClient.getQueryData(["posts", "recommends"])) {
-          queryClient.setQueryData(
-            ["posts", "recommends"],
-            (prevData: { pages: Post[][] }) => {
-              const shallow = {
-                ...prevData,
-                pages: [...prevData.pages],
-              };
-              shallow.pages[0] = [...shallow.pages[0]];
-              shallow.pages[0].unshift(newPost);
-              return shallow;
-            }
-          );
-        }
-        if (queryClient.getQueryData(["posts", "followings"])) {
-          queryClient.setQueryData(
-            ["posts", "followings"],
-            (prevData: { pages: Post[][] }) => {
-              const shallow = {
-                ...prevData,
-                pages: [...prevData.pages],
-              };
-              shallow.pages[0] = [...shallow.pages[0]];
-              shallow.pages[0].unshift(newPost);
-              return shallow;
-            }
-          );
-        }
-      }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const onClickButton = () => {
@@ -110,7 +103,7 @@ export default function PostForm({ me }: { me: Session | null }) {
   };
 
   return (
-    <form className={style.postForm} onSubmit={onSubmit}>
+    <form className={style.postForm} onSubmit={mutation.mutate}>
       <div className={style.postUserSection}>
         <div className={style.postUserImage}>
           <img

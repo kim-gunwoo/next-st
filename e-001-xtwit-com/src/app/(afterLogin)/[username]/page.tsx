@@ -10,6 +10,7 @@ import UserPosts from "./_component/UserPosts";
 import UserInfo from "./_component/UserInfo";
 import { getUser } from "./_lib/getUser";
 import { getUserPosts } from "./_lib/getUserPosts";
+import { auth } from "@/auth";
 
 export default async function Page({
   params,
@@ -17,6 +18,7 @@ export default async function Page({
   params: { username: string };
 }) {
   const { username } = params;
+  const session = await auth();
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["users", username],
@@ -31,7 +33,7 @@ export default async function Page({
   return (
     <HydrationBoundary state={dehydratedState}>
       <main className={style.main}>
-        <UserInfo username={username} />
+        <UserInfo username={username} session={session} />
         <div>
           <UserPosts username={username} />
         </div>

@@ -1,9 +1,3 @@
-// import { redirect } from "next/navigation";
-
-// export default function Login() {
-//   redirect("/i/flow/login");
-// }
-
 "use client";
 
 import { useRouter } from "next/navigation";

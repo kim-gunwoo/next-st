@@ -6,14 +6,14 @@ export const getSearchResult: QueryFunction<
   [_1: string, _2: string, searchParams: { q: string; pf?: string; f?: string }]
 > = async ({ queryKey }) => {
   const [_1, _2, searchParams] = queryKey;
+  const urlSearchParams = new URLSearchParams(searchParams);
   const res = await fetch(
-    `http://localhost:9090/api/search/${
-      searchParams.q
-    }?${searchParams.toString()}`,
+    `http://localhost:9090/api/posts?${urlSearchParams.toString()}`,
     {
       next: {
         tags: ["posts", "search", searchParams.q],
       },
+      credentials: "include",
       cache: "no-store",
     }
   );
