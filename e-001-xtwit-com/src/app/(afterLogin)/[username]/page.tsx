@@ -1,6 +1,4 @@
 import style from "./profile.module.css";
-import BackButton from "../_components/BackButton";
-import Post from "../_components/Post";
 import {
   HydrationBoundary,
   QueryClient,
@@ -8,21 +6,32 @@ import {
 } from "@tanstack/react-query";
 import UserPosts from "./_component/UserPosts";
 import UserInfo from "./_component/UserInfo";
-import { getUser } from "./_lib/getUser";
 import { getUserPosts } from "./_lib/getUserPosts";
 import { auth } from "@/auth";
+import { getUserServer } from "./_lib/getUserServer";
+import { User } from "@/model/User";
 
-export default async function Page({
-  params,
-}: {
+interface Props {
   params: { username: string };
-}) {
+}
+
+export async function generateMetadata({ params }: Props) {
+  const user: User = await getUserServer({
+    queryKey: ["users", params.username],
+  });
+  return {
+    title: `${user.nickname} (${user.id}) / meta`,
+    description: `${user.nickname} (${user.id}) 프로필`,
+  };
+}
+
+export default async function Page({ params }: Props) {
   const { username } = params;
   const session = await auth();
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["users", username],
-    queryFn: getUser,
+    queryFn: getUserServer,
   });
   await queryClient.prefetchQuery({
     queryKey: ["posts", "users", username],

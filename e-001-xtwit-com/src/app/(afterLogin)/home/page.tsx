@@ -12,6 +12,12 @@ import TabDeciderSuspense from "./_component/TabDeciderSuspense";
 import { Suspense } from "react";
 import Loading from "./loading";
 import { auth } from "@/auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "홈",
+  description: "홈",
+};
 
 export default async function Page() {
   const session = await auth();
