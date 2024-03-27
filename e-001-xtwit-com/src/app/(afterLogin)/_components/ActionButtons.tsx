@@ -9,6 +9,8 @@ import {
 import { Post } from "@/model/Post";
 import { useSession } from "next-auth/react";
 import { MouseEventHandler } from "react";
+import { useRouter } from "next/navigation";
+import { useModalStore } from "@/store/modal";
 
 export default function ActionButtons({
   white,
@@ -19,6 +21,8 @@ export default function ActionButtons({
 }) {
   const queryClient = useQueryClient();
   const { data: session } = useSession();
+  const router = useRouter();
+  const modalStore = useModalStore();
   const reposted = !!post.Reposts?.find(
     (v) => v.userId === session?.user?.email
   );
@@ -383,16 +387,19 @@ export default function ActionButtons({
 
   const onClickComment: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
-    const formData = new FormData();
-    formData.append("content", "답글 테스트");
-    fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post.postId}/comments`,
-      {
-        method: "post",
-        credentials: "include",
-        body: formData,
-      }
-    );
+    modalStore.setMode("comment");
+    modalStore.setData(post);
+    router.push("/compose/tweet");
+    // const formData = new FormData();
+    // formData.append("content", "답글 테스트");
+    // fetch(
+    //   `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${post.postId}/comments`,
+    //   {
+    //     method: "post",
+    //     credentials: "include",
+    //     body: formData,
+    //   }
+    // );
   };
 
   const onClickRepost: MouseEventHandler<HTMLButtonElement> = (e) => {
