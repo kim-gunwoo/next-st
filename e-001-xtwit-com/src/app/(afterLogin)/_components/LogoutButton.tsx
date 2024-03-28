@@ -23,6 +23,7 @@ export default function LogoutButton({ me }: { me: Session | null }) {
         credentials: "include",
       });
       router.replace("/");
+      router.refresh();
     });
   };
 
