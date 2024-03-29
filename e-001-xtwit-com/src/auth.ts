@@ -8,6 +8,22 @@ export const {
   auth,
   signIn,
 } = NextAuth({
+  /**
+   * [auth][error] UntrustedHost: Host must be trusted.
+   * URL was: http://localhost:3000/api/auth/session .Read more at https://errors.authjs.dev#untrustedhost
+   *
+   * 1. https://github.com/nextauthjs/next-auth/discussions/6071
+   *
+   * .env 파일
+   * AUTH_TRUST_HOST=http://localhost:3000
+   * 또는
+   *
+   * 2. https://github.com/nextauthjs/next-auth/issues/6113
+   *
+   * auth.ts
+   * trustHost: true,
+   *  */
+  trustHost: true,
   pages: {
     signIn: "/i/flow/login",
     newUser: "/i/flow/signup",

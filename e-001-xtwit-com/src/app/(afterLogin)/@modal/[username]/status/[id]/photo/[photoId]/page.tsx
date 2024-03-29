@@ -1,6 +1,4 @@
-import Post from "@/app/(afterLogin)/_components/Post";
 import CommentForm from "@/app/(afterLogin)/[username]/status/[id]/_component/CommentForm";
-import ActionButtons from "@/app/(afterLogin)/_components/ActionButtons.1";
 import style from "./photoModal.module.css";
 import PhotoModalCloseButton from "./_component/PhotoModalCloseButton";
 import {
