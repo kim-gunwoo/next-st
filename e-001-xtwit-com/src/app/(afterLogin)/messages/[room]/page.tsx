@@ -8,78 +8,37 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import "dayjs/locale/ko";
+import MessageForm from "./_component/MessageForm";
+import { QueryClient, useQuery } from "@tanstack/react-query";
+import { auth } from "@/auth";
+import { getUserServer } from "../../[username]/_lib/getUserServer";
+import { UserInfo } from "./_component/UserInfo";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
-export default function ChatRoom() {
-  const user = {
-    id: "test",
-    nickname: "test nick name",
-    image: faker.image.avatar(),
-  };
+export default async function ChatRoom({
+  params,
+}: {
+  params: { room: string };
+}) {
+  const session = await auth();
+  const queryClient = new QueryClient();
+  const ids = params.room.split("-").filter((v) => v !== session?.user?.email);
+  if (!ids[0]) {
+    return null;
+  }
 
-  const messages = [
-    {
-      messageId: 1,
-      roomId: 123,
-      id: "test",
-      content: "hello~~~",
-      createdAt: new Date(),
-    },
-    {
-      messageId: 2,
-      roomId: 123,
-      id: "test2",
-      content: "good bye~~~",
-      createdAt: new Date(),
-    },
-  ];
+  await queryClient.prefetchQuery({
+    queryKey: ["users", ids[0]],
+    queryFn: getUserServer,
+  });
 
   return (
     <main className={style.main}>
-      <div className={style.header}>
-        <BackButton />
-        <div>
-          <h2>{user.nickname}</h2>
-        </div>
-      </div>
-      <Link href={user.nickname} className={style.userInfo}>
-        <img src={user.image} alt={user.id} />
-        <div>
-          <b>{user.nickname}</b>
-        </div>
-        <div>@{user.id}</div>
-      </Link>
-      <div className={style.list}>
-        {messages.map((m) => {
-          if (m.id === user.id) {
-            // 내 메시지면
-            return (
-              <div
-                key={m.messageId}
-                className={cx(style.message, style.myMessage)}
-              >
-                <div className={style.content}>{m.content}</div>
-                <div className={style.date}>
-                  {dayjs(m.createdAt).format("YYYY년 MM월 DD일 A HH시 mm분")}
-                </div>
-              </div>
-            );
-          }
-          return (
-            <div
-              key={m.messageId}
-              className={cx(style.message, style.yourMessage)}
-            >
-              <div className={style.content}>{m.content}</div>
-              <div className={style.date}>
-                {dayjs(m.createdAt).format("YYYY년 MM월 DD일 A HH시 mm분")}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <UserInfo id={ids[0]} />
+      <div className={style.list}></div>
+      <MessageForm />
     </main>
   );
 }

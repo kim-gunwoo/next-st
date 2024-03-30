@@ -8,6 +8,7 @@ import { getUser } from "../_lib/getUser";
 import { Session } from "next-auth";
 import { MouseEventHandler } from "react";
 import cx from "classnames";
+import { useRouter } from "next/navigation";
 
 export default function UserInfo({
   username,
@@ -16,6 +17,7 @@ export default function UserInfo({
   username: string;
   session: Session | null;
 }) {
+  const router = useRouter();
   const { data: user, error } = useQuery<
     User,
     Object,
@@ -258,6 +260,12 @@ export default function UserInfo({
     }
   };
 
+  const onMessage = () => {
+    const ids = [session?.user?.email, user.id];
+    ids.sort();
+    router.push(`/messages/${ids.join("-")}`);
+  };
+
   return (
     <>
       <div className={style.header}>
@@ -274,12 +282,26 @@ export default function UserInfo({
             <div>@{user.id}</div>
           </div>
           {user.id !== session?.user?.email && (
-            <button
-              onClick={onFollow}
-              className={cx(style.followButton, followed && style.followed)}
-            >
-              {followed ? "팔로잉" : "팔로우"}
-            </button>
+            <>
+              <button onClick={onMessage} className={style.messageButton}>
+                <svg
+                  viewBox="0 0 24 24"
+                  width={18}
+                  aria-hidden="true"
+                  className="r-4qtqp9 r-yyyyoo r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-z80fyv r-19wmn03"
+                >
+                  <g>
+                    <path d="M1.998 5.5c0-1.381 1.119-2.5 2.5-2.5h15c1.381 0 2.5 1.119 2.5 2.5v13c0 1.381-1.119 2.5-2.5 2.5h-15c-1.381 0-2.5-1.119-2.5-2.5v-13zm2.5-.5c-.276 0-.5.224-.5.5v2.764l8 3.638 8-3.636V5.5c0-.276-.224-.5-.5-.5h-15zm15.5 5.463l-8 3.636-8-3.638V18.5c0 .276.224.5.5.5h15c.276 0 .5-.224.5-.5v-8.037z"></path>
+                  </g>
+                </svg>
+              </button>
+              <button
+                onClick={onFollow}
+                className={cx(style.followButton, followed && style.followed)}
+              >
+                {followed ? "팔로잉" : "팔로우"}
+              </button>
+            </>
           )}
         </div>
         <div className={style.userFollower}>

@@ -29,6 +29,24 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `meta 에서 ${user.nickname} 님 : ${post.content}`,
     description: post.content,
+    openGraph: {
+      title: `Z에서 ${user.nickname} 님 : ${post.content}`,
+      description: post.content,
+      images:
+        post.Images?.length > 0
+          ? post.Images?.map((v) => ({
+              url: `${v.link}`,
+              width: 600,
+              height: 400,
+            }))
+          : [
+              {
+                url: `${user.image}`,
+                width: 400,
+                height: 400,
+              },
+            ],
+    },
   };
 }
 
