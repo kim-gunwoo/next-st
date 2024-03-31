@@ -1,4 +1,5 @@
-import styles from "./main.module.css";
+// import styles from "./main.module.css";
+import * as styles from "./main.css";
 import Image from "next/image";
 import next from "../../../../public/next.svg";
 import Link from "next/link";
@@ -7,7 +8,7 @@ export default function Main() {
   return (
     <>
       <div className={styles.left}>
-        <Image src={next} alt="logo" />
+        <Image className={styles.leftImg} src={next} alt="logo" />
       </div>
       <div className={styles.right}>
         <h1>지금 일어나고 있는 일</h1>

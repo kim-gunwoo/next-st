@@ -1,6 +1,7 @@
 "use client";
 
-import style from "./signup.module.css";
+// import style from "./signup.module.css";
+import * as style from "./signup.css";
 import BackButton from "./BackButton";
 import onSubmit from "../_lib/signup";
 import { useFormState, useFormStatus } from "react-dom";

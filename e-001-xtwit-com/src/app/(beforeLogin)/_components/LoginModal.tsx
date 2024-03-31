@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import style from "./login.module.css";
+// import style from "./login.module.css";
+import * as style from "./login.css";
 import { ChangeEventHandler, FormEventHandler, useState } from "react";
 import { signIn } from "next-auth/react";
 // import { signIn } from "@/auth"; 서버일 경우
